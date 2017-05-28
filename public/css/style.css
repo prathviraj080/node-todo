@@ -1,0 +1,12 @@
+html 					{ overflow-y:scroll; }
+body 					{ padding-top:50px; }
+#todo-list 				{ margin-bottom:30px; }
+#todo-form 	 			{ margin-bottom:50px; }
+
+.todo-text {
+    box-shadow:1px 1px 45px #333;
+    transition: 200ms all ease;
+    border:none;
+    padding: 5px 5px;
+}
+
