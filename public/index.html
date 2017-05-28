@@ -53,9 +53,20 @@
                            {{ todo.name }}
                         </div>
                         <div class="panel-footer">
-                            <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="Pending"> Pending</label>
-                            <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="ongoing"> Ongoing</label>
-                            <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="completed"> Completed</label>
+                            <div class="row">
+                                <div class="col-xs-4"> 
+                                    <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="Pending"> Pending</label>
+                                </div>
+                                <div class="col-xs-4">
+                                    <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="ongoing"> Ongoing</label>                                    
+                                </div>
+                                <div class="col-xs-4"> 
+                                    <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="completed"> Completed</label>                                    
+                                </div>
+                            </div>
+                            
+                            
+                            
                         </div>
                     </div>
                </div>
