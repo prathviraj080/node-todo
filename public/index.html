@@ -43,7 +43,7 @@
          <div id="todo-list" class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-12">
                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-               <div class="checkbox" ng-repeat="todo in todos">
+               <div ng-repeat="todo in todos">
                      <div class="panel panel-default">
                         <div class="panel-heading">
                            {{moment(todo.created_date)}}
@@ -53,9 +53,9 @@
                            {{ todo.name }}
                         </div>
                         <div class="panel-footer">
-                            <label style="padding: 10px"><input type="radio"  ng-model="todo.status" name="status" value="Pending"> Pending</label>
-                            <label style="padding: 10px"><input type="radio"  ng-model="todo.status" name="status" value="ongoing"> Ongoing</label>
-                            <label style="padding: 10px"><input type="radio"  ng-model="todo.status" name="status" value="completed"> Completed</label>
+                            <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="Pending"> Pending</label>
+                            <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="ongoing"> Ongoing</label>
+                            <label class="radio-lbl"><input type="radio"  ng-model="todo.status" name="status" value="completed"> Completed</label>
                         </div>
                     </div>
                </div>

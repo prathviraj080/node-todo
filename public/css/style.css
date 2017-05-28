@@ -10,3 +10,7 @@ body 					{ padding-top:50px; }
     padding: 5px 5px;
 }
 
+.radio-lbl {
+   font-weight: 200;
+   padding: 0 7%;
+}
