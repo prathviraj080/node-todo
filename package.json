@@ -2,7 +2,11 @@
   "name": "node-todo",
   "version": "1.0.0",
   "description": "",
-  //"main": "index.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/prathviraj080/node-todo.git"
@@ -19,8 +23,7 @@
     "express": "^4.15.3",
     "mongoose": "^4.10.2"
   },
-  "scripts": {
-    "start": "node server.js"
-  },
-  "main": "app.js"
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
 }
