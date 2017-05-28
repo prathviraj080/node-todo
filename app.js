@@ -20,8 +20,8 @@ routes(app);
 var port = process.env.PORT || 3000;
 
 
-
-app.use('/assets', express.static(__dirname + '/public'));
+app.use(express.static('./public')); 
+//app.use('/public', express.static(__dirname + '/public'));
 
 //app.set('view engine', 'ejs');
 
@@ -34,4 +34,9 @@ console.log('todo list RESTful API server started on: ' + port);
 
 app.use(function(req, res) {
   res.status(404).send({url: req.originalUrl + ' not found'})
+});
+
+
+app.get('*', function(req, res) {
+        res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 });
