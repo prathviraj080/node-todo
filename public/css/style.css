@@ -7,6 +7,7 @@ body {
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTI-MfzSis5qK8podouhSk3XMtSTnhnnlYv1srYrygkUgkilnW1Q);
     background-repeat: no-repeat;
     background-size: cover;
+    background-repeat-y : initial;
 }
 
 #todo-list {
