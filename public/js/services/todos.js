@@ -1,4 +1,4 @@
-angular.module('todoService', [])
+angular.module('todo')
 
 	// super simple service
 	// each function returns a promise object 
@@ -9,6 +9,9 @@ angular.module('todoService', [])
 			},
 			create : function(todoData) {
 				return $http.post('/api/todos', todoData);
+			},
+			update : function(id,todoData) {
+				return $http.put('/api/todos/' + id, todoData);
 			},
 			delete : function(id) {
 				return $http.delete('/api/todos/' + id);

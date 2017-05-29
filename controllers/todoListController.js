@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     Task = mongoose.model('Tasks');
 
 exports.list_all_tasks = function (req, res) {
-    Task.find({}).sort({created_date: -1}).exec(function (err, task) {
+    Task.find({}).sort({updated_date: -1}).exec(function (err, task) {
         if (err)
             res.send(err);
         res.json(task);
@@ -22,7 +22,7 @@ exports.create_a_task = function (req, res) {
             res.send(err);
 
         //Return all
-        Task.find({}, function (err, task) {
+        Task.find({}).sort({updated_date: -1}).exec(function (err, task) {
             if (err)
                 res.send(err);
             res.json(task);
@@ -34,7 +34,7 @@ exports.create_a_task = function (req, res) {
 
 
 exports.read_a_task = function (req, res) {
-    Task.findById(req.params.taskId).sort({created_date: -1}).exec(function (err, task) {
+    Task.findById(req.params.taskId).sort({updated_date: -1}).exec(function (err, task) {
         if (err)
             res.send(err);
         res.json(task);
@@ -43,10 +43,21 @@ exports.read_a_task = function (req, res) {
 
 
 exports.update_a_task = function (req, res) {
-    Task.findOneAndUpdate(req.params.taskId, req.body, { new: true }, function (err, task) {
+    console.log(req.params.taskId);
+        console.log(req.body);
+    Task.findOneAndUpdate({_id:req.params.taskId}, req.body, { new: true }, function (err, task) {
         if (err)
             res.send(err);
-        res.json(task);
+            
+
+        Task.find({}).sort({updated_date: -1}).exec(function (err, task) {
+            if (err)
+                res.send(err);
+            res.json(task);
+        });
+
+
+
     });
 };
 
@@ -61,7 +72,7 @@ exports.delete_a_task = function (req, res) {
 
 
         //Return all
-        Task.find({}, function (err, task) {
+        Task.find({}).sort({updated_date: -1}).exec(function (err, task) {
             if (err)
                 res.send(err);
             res.json(task);
