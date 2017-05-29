@@ -3,7 +3,7 @@ var todoApp = angular.module('todo', ['ui.bootstrap']);
 
 
     // inject the Todo service factory into our controller
-todoApp.controller('mainController', ['$scope', '$http', 'Todos','Tasks', function ($scope, $http, Todos,Tasks) {
+todoApp.controller('mainController', ['$scope', '$rootScope', '$http', 'Todos','Tasks', function ($scope,$rootScope, $http, Todos,Tasks) {
         $scope.formData = {};
         $scope.loading = true;
         
@@ -73,6 +73,22 @@ todoApp.controller('mainController', ['$scope', '$http', 'Todos','Tasks', functi
                 $scope.todos = Tasks.list;
             }
         });
+
+        $scope.$watch(function () { return $scope.todos }, function (newVal, oldVal) {
+            if (typeof newVal !== 'undefined') {
+                var pending = 0;
+                for(var i=0;i<$scope.todos.length;i++) {
+                    if($scope.todos[i].status == 'pending')
+                        ++pending;
+                }
+                var msg = {};
+                msg.pending = pending;
+                msg.total = $scope.todos.length;
+                $rootScope.$broadcast('count', { message: msg });
+            }
+        });
+
+        
     }]);
 
 
@@ -83,7 +99,6 @@ todoApp.controller('headerController',['$scope','Todos','Tasks',function($scope,
         $scope.total = response.data.length;
         var pending=0;
         response.data.forEach(function(ele){
-            console.log(ele);
             if(ele.status == 'pending')
                 ++pending;
         });
@@ -93,15 +108,35 @@ todoApp.controller('headerController',['$scope','Todos','Tasks',function($scope,
         $scope.loading = false;
     });
 
-    $scope.search = function() {
-        Todos.search($scope.query).then(function success(response){
-            Tasks.list = [];
-            response.data.forEach(function(task){
-                Tasks.add(task);
-            });
-        }, function error(response){
+    $scope.$on('count', function (event, args) {
+        console.log(args);
+        $scope.total = args.message.total;
+        $scope.pending = args.message.pending;
+    });
 
-        });
+    $scope.search = function() {
+        if($scope.query) {
+            Todos.search($scope.query).then(function success(response){
+                Tasks.list = [];
+                response.data.forEach(function(task){
+                    Tasks.add(task);
+                });
+            }, function error(response){
+
+            });
+        } else {
+            Todos.get().then(function success(response) {
+                Tasks.list = [];
+                response.data.forEach(function(task){
+                    Tasks.add(task);
+                });
+                $scope.loading = false;
+            }, function error(params) {
+                $scope.loading = false;
+            });
+        }
+
+
     }
 
     
@@ -109,4 +144,11 @@ todoApp.controller('headerController',['$scope','Todos','Tasks',function($scope,
   $scope.isNavCollapsed = true;
   $scope.isCollapsed = false;
   $scope.isCollapsedHorizontal = false;
+}]);
+
+
+todoApp.controller('pageController',['$scope',function($scope){
+    $scope.$on('count', function (event, args) {
+        //$scope.$broadcast('count',{message:args});
+    });
 }]);
