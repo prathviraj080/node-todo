@@ -1,6 +1,7 @@
 
 'use strict';
 var mongoose = require('mongoose');
+
 var Schema = mongoose.Schema;
 
 
@@ -26,7 +27,9 @@ var TaskSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Tasks', TaskSchema);
+TaskSchema.index({'name': 'text'});
+
+module.exports = mongoose.model('TaskList', TaskSchema);
 
 /*
 

@@ -2,7 +2,7 @@
 
 
 var mongoose = require('mongoose'),
-    Task = mongoose.model('Tasks');
+    Task = mongoose.model('TaskList');
 
 exports.list_all_tasks = function (req, res) {
     Task.find({}).sort({updated_date: -1}).exec(function (err, task) {
@@ -80,6 +80,14 @@ exports.delete_a_task = function (req, res) {
     });
 };
 
+
+exports.search = function(req, res) {
+    Task.find({$text: {$search: req.params.query}}).sort({updated_date: -1}).exec(function (err, task) {
+        if (err)
+            res.send(err);
+        res.json(task);
+    });
+}
 /*
 
 var Todos = require('../models/todoModel');
