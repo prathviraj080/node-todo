@@ -21,6 +21,7 @@
       <script src="js/services/todos.js"></script>
       <!-- load our todo service -->
       <script src="js/core.js"></script>
+      <script src="directives/typeahead.js"></script>
       <!-- load our main application -->
    </head>
    <!-- SET THE CONTROLLER -->
@@ -43,25 +44,39 @@
 
 
                     <div class="col-sm-6 col-md-4" style="padding: 8px;float: right;">
+
+                                <typeahead items="taskNames" prompt="Search Tasks..." name="name" on-select="onItemSelected(param)">
+        </typeahead>
+        <!--
                         <form id="search-form">
                         <div class="input-group">
                         <input type="text" class="form-control square-border" placeholder="Search Tasks..." ng-model="query">
                         <span class="input-group-btn">
                             <button class="btn btn-primary square-border" type="submit" ng-click="search()">Go!</button>
                         </span>
-                        </div><!-- /input-group -->
-                        </form>
+                        </div>
+                        </form> -->
                     </div>
                 </div>
             </nav>
+
+                <div class="alert alert-info col-md-6 col-md-offset-3" ng-show="error">
+                <span href="#" class="close" ng-click="closeError()" aria-label="close">&times;</span>
+                    <strong>404</strong> No results found
+                </div>
         </div>
 
 
 
 
       <div class="container" ng-controller="mainController" >
+
+
+
          <!-- FORM TO CREATE TODOS -->
          <div id="todo-form" class="row">
+
+
             <div class="col-sm-8 col-sm-offset-2 text-center">
                <form>
                   <div class="form-group">
@@ -74,6 +89,7 @@
                   <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add <i class="fa fa-plus-circle" aria-hidden="true"></i>
 </button>
                </form>
+
             </div>
          </div>
          <!-- TODO LIST -->

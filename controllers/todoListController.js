@@ -87,7 +87,17 @@ exports.search = function(req, res) {
             res.send(err);
         res.json(task);
     });
-}
+};
+
+
+exports.get_task_names = function(req,res) {
+    Task.find({}).sort({name:1}).select("name").exec(function(err,task){
+        if(err)
+            res.send(err);
+        res.json(task);
+
+    })
+};
 /*
 
 var Todos = require('../models/todoModel');

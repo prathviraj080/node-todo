@@ -14,4 +14,9 @@ module.exports = function(app) {
 
   app.route('/api/todos/search/:query')
     .get(todoList.search);
+
+
+  app.route('/api/todos/get/name')
+    .get(todoList.get_task_names);
+    
 };

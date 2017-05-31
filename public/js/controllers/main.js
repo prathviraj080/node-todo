@@ -3,7 +3,7 @@ var todoApp = angular.module('todo', ['ui.bootstrap']);
 
 
     // inject the Todo service factory into our controller
-todoApp.controller('mainController', ['$scope', '$rootScope', '$http', 'Todos','Tasks', function ($scope,$rootScope, $http, Todos,Tasks) {
+todoApp.controller('mainController', ['$scope', '$http', 'Todos','Tasks', function ($scope, $http, Todos,Tasks) {
         $scope.formData = {};
         $scope.loading = true;
         
@@ -84,7 +84,7 @@ todoApp.controller('mainController', ['$scope', '$rootScope', '$http', 'Todos','
                 var msg = {};
                 msg.pending = pending;
                 msg.total = $scope.todos.length;
-                $rootScope.$broadcast('count', { message: msg });
+                $scope.$parent.$broadcast('count', { message: msg });
             }
         });
 
@@ -95,6 +95,7 @@ todoApp.controller('mainController', ['$scope', '$rootScope', '$http', 'Todos','
 todoApp.controller('headerController',['$scope','Todos','Tasks',function($scope,Todos,Tasks){
     $scope.query = '';
     $scope.todos = '';
+    $scope.error = false;
     Todos.get().then(function success(response) {
         $scope.total = response.data.length;
         var pending=0;
@@ -108,23 +109,39 @@ todoApp.controller('headerController',['$scope','Todos','Tasks',function($scope,
         $scope.loading = false;
     });
 
-    $scope.$on('count', function (event, args) {
-        console.log(args);
-        $scope.total = args.message.total;
-        $scope.pending = args.message.pending;
+
+
+    Todos.getNames().then(function success(response) {
+        $scope.taskNames = response.data;
+        $scope.name="";
+        $scope.loading = false;
+    }, function error(params) {
+        $scope.loading = false;
     });
 
-    $scope.search = function() {
-        if($scope.query) {
-            Todos.search($scope.query).then(function success(response){
-                Tasks.list = [];
-                response.data.forEach(function(task){
-                    Tasks.add(task);
-                });
-            }, function error(response){
 
-            });
-        } else {
+    $scope.$on('count', function (event, args) {
+        $scope.total = args.message.total;
+        $scope.pending = args.message.pending;
+
+        Todos.getNames().then(function success(response) {
+            $scope.taskNames = response.data;
+            $scope.name="";
+            $scope.loading = false;
+        }, function error(params) {
+            $scope.loading = false;
+        });
+
+    });
+
+    $scope.closeError = function() {
+         $scope.error = false;
+    }
+
+
+    $scope.onItemSelected = function(args){
+        $scope.error = false;
+        if(args == '') {
             Todos.get().then(function success(response) {
                 Tasks.list = [];
                 response.data.forEach(function(task){
@@ -134,9 +151,19 @@ todoApp.controller('headerController',['$scope','Todos','Tasks',function($scope,
             }, function error(params) {
                 $scope.loading = false;
             });
+        } else if(args == 'badData') {
+            Tasks.list = [];
+            $scope.error = true;
+        } else {
+            Todos.search(args).then(function success(response){
+                Tasks.list = [];
+                response.data.forEach(function(task){
+                    Tasks.add(task);
+                });
+            }, function error(response){
+
+            });
         }
-
-
     }
 
     

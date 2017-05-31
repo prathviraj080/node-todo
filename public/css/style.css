@@ -50,3 +50,16 @@ body {
     background-color: #939D99;
     border-color: #FAD;
   }
+
+  .active {
+      background-color: #428bca;
+      color: #fff;
+      font-weight: 600;
+}
+
+.search-items {
+      background-color: #fff;
+      color: #000;
+      position: fixed;
+      width: inherit;
+}

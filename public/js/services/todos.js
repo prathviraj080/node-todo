@@ -13,11 +13,14 @@ todoApp.factory('Todos', ['$http',function($http) {
         update : function(id,todoData) {
             return $http.put('/api/todos/' + id, todoData);
         },
-        search : function(id) {
-            return $http.get('/api/todos/search/' + id);
+        search : function(name) {
+            return $http.get('/api/todos/search/' + name);
         },
         delete : function(id) {
             return $http.delete('/api/todos/' + id);
+        },
+        getNames : function() {
+            return $http.get('/api/todos/get/name');
         }
     }
 }]);
