@@ -10,9 +10,9 @@
 
 
     <div class="search-items" ng-hide="!model.length || selected">
-        <div class="item" ng-repeat="item in items | filter:model  track by $index" ng-click="handleSelection(item[name])" style="cursor:pointer"
+        <div class="search-item" ng-repeat="item in items | filter:model  track by $index" ng-click="handleSelection(item[name])" style="cursor:pointer"
             ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">
-            <p class="title">{{item[name]}}</p>
+            <span class="title">{{item[name]}}</span>
         </div>
     </div>
 

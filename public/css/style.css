@@ -63,3 +63,7 @@ body {
       position: fixed;
       width: inherit;
 }
+
+.search-item {
+    padding: 5px;
+}
